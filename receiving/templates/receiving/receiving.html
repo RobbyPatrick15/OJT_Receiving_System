@@ -1,0 +1,174 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receiving - WMSU</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        wmsu: {
+                            red: '#E52226',
+                            dark: '#a92626',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+    <!-- Sidebar -->
+    {% include 'accounts/components/sidebar.html' %}
+
+    <!-- Main Content -->
+    <main class="ml-56 p-8 min-h-screen">
+
+        <!-- Page Header -->
+        <div class="mb-6">
+            <h1 class="text-2xl font-bold text-gray-800">Receiving Department</h1>
+            <p class="text-gray-500 text-sm mt-1">Process and verify incoming documents</p>
+        </div>
+
+        <!-- Form Card — full width -->
+        <div class="bg-white rounded-xl shadow p-8 w-full">
+
+            <h2 class="text-lg font-semibold text-gray-800 mb-6">Receiving New Document</h2>
+
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <!-- Top 2 columns -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+
+                    <!-- Document Type -->
+                    <div>
+                        <label class="block text-sm text-gray-600 mb-2">Document Type</label>
+                        <select name="document_type" class="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm text-gray-500 bg-white focus:outline-none focus:border-red-400 focus:ring-2 focus:ring-red-100 transition-all">
+                            <option value="" disabled selected>Select Document Type</option>
+                            <option value="memo">Memorandum</option>
+                            <option value="letter">Letter</option>
+                            <option value="report">Report</option>
+                            <option value="form">Form</option>
+                            <option value="certificate">Certificate</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <!-- Date Received -->
+                    <div>
+                        <label class="block text-sm text-gray-600 mb-2">Date Received</label>
+                        <input type="date" name="date_received"
+                               class="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm text-gray-700 bg-white focus:outline-none focus:border-red-400 focus:ring-2 focus:ring-red-100 transition-all">
+                    </div>
+
+                </div>
+
+                <!-- Sender Information -->
+                <div class="mb-6">
+                    <label class="block text-sm text-gray-600 mb-2">Sender Information</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <input type="text" name="sender_name" placeholder="Sender Name"
+                               class="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm text-gray-700 bg-white focus:outline-none focus:border-red-400 focus:ring-2 focus:ring-red-100 transition-all">
+                        <input type="text" name="sender_dept" placeholder="Department / Office"
+                               class="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm text-gray-700 bg-white focus:outline-none focus:border-red-400 focus:ring-2 focus:ring-red-100 transition-all">
+                    </div>
+                </div>
+
+                <!-- Upload Document -->
+                <div class="mb-6">
+                    <label class="block text-sm text-gray-600 mb-2">Upload Document</label>
+                    <div class="border-2 border-dashed border-gray-200 rounded-lg p-10 text-center cursor-pointer hover:border-red-300 hover:bg-red-50 transition-all duration-200"
+                         onclick="document.getElementById('fileInput').click()">
+                        <input type="file" id="fileInput" name="document" class="hidden"
+                               onchange="updateFileName(this)">
+                        <svg class="w-8 h-8 text-gray-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v8"/>
+                        </svg>
+                        <p class="text-sm text-gray-400" id="fileLabel">Drag files here</p>
+                        <p class="text-xs text-gray-300 mt-1">or click to browse</p>
+                    </div>
+                </div>
+
+                <!-- Verification Checklist -->
+                <div class="mb-6">
+                    <label class="block text-sm text-gray-600 mb-2">Verification Checklist</label>
+                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                        <label class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 transition-all">
+                            <input type="checkbox" name="check1" class="w-4 h-4 accent-red-600">
+                            <span class="text-sm text-gray-700">Document is legible and clear</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 transition-all">
+                            <input type="checkbox" name="check2" class="w-4 h-4 accent-red-600">
+                            <span class="text-sm text-gray-700">All required signatures present</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 transition-all">
+                            <input type="checkbox" name="check3" class="w-4 h-4 accent-red-600">
+                            <span class="text-sm text-gray-700">Official seal/stamp visible</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 transition-all">
+                            <input type="checkbox" name="check4" class="w-4 h-4 accent-red-600">
+                            <span class="text-sm text-gray-700">Information matches records</span>
+                        </label>
+                        <label class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 cursor-pointer transition-all">
+                            <input type="checkbox" name="check5" class="w-4 h-4 accent-red-600">
+                            <span class="text-sm text-gray-700">No damages or alterations</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Additional Notes -->
+                <div class="mb-8">
+                    <label class="block text-sm text-gray-600 mb-2">Additional Notes</label>
+                    <textarea name="notes" rows="3"
+                              placeholder="Add Additional notes/observation"
+                              class="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm text-gray-700 bg-white focus:outline-none focus:border-red-400 focus:ring-2 focus:ring-red-100 transition-all resize-none"></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit"
+                        class="w-full py-4 bg-wmsu-red hover:bg-wmsu-dark active:scale-[0.98] text-white font-semibold text-sm tracking-widest uppercase rounded-lg transition-all duration-200">
+                    Submit Document
+                </button>
+
+            </form>
+        </div>
+    </main>
+
+    <script>
+        function updateFileName(input) {
+            const label = document.getElementById('fileLabel');
+            if (input.files && input.files[0]) {
+                label.textContent = input.files[0].name;
+                label.classList.add('text-red-500');
+            } else {
+                label.textContent = 'Drag files here';
+                label.classList.remove('text-red-500');
+            }
+        }
+
+        const dropZone = document.querySelector('.border-dashed');
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('border-red-400', 'bg-red-50');
+        });
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('border-red-400', 'bg-red-50');
+        });
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('border-red-400', 'bg-red-50');
+            const file = e.dataTransfer.files[0];
+            document.getElementById('fileInput').files = e.dataTransfer.files;
+            document.getElementById('fileLabel').textContent = file.name;
+        });
+    </script>
+
+</body>
+</html>
