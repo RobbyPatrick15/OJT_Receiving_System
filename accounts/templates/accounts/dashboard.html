@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - WMSU</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        wmsu: {
+                            red: '#E52226',
+                            dark: '#a92626',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+    <!-- Sidebar -->
+    {% include 'accounts/components/sidebar.html' %}
+
+    <!-- Main Content pushed beside sidebar -->
+    <main class="ml-56 p-8">
+
+        <!-- Header -->
+        <div class="mb-6">
+            <h1 class="text-2xl font-bold text-gray-800">Dashboard</h1>
+            <p class="text-gray-500 text-sm mt-1">Welcome back, <span class="text-red-700 font-medium">{{ request.user.username }}</span>!</p>
+        </div>
+
+        <!-- Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-white rounded-xl shadow p-6">
+                <p class="text-sm text-gray-500">Total Records</p>
+                <h2 class="text-3xl font-bold text-gray-800 mt-1">0</h2>
+            </div>
+            <div class="bg-white rounded-xl shadow p-6">
+                <p class="text-sm text-gray-500">Total Archives</p>
+                <h2 class="text-3xl font-bold text-gray-800 mt-1">0</h2>
+            </div>
+            <div class="bg-white rounded-xl shadow p-6">
+                <p class="text-sm text-gray-500">Receiving</p>
+                <h2 class="text-3xl font-bold text-gray-800 mt-1">0</h2>
+            </div>
+        </div>
+
+    </main>
+
+</body>
+</html>

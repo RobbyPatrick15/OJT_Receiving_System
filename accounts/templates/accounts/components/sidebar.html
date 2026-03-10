@@ -1,0 +1,64 @@
+{% load static %}
+<div class="fixed top-0 left-0 h-screen w-56 flex flex-col z-50"
+     style="background: linear-gradient(180deg, #B91C1C 0%, #7F1D1D 100%);">
+
+    <!-- Logo on top center -->
+    <div class="flex flex-col items-center gap-2 px-6 py-6 border-b border-white/10">
+        <div class="w-20 h-20 rounded-full bg-white p-1.5 shadow-lg">
+            <img src="{% static 'accounts/logo_wmsu.JPG' %}" alt="WMSU Logo"
+                 class="w-full h-full object-contain rounded-full">
+        </div>
+        <h1 class="text-white font-bold text-sm tracking-widest uppercase mt-1">WMSU</h1>
+        <p class="text-white/50 text-[10px] tracking-wide text-center leading-tight">Records and Archives System</p>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
+
+        <a href="#" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-white/70 hover:bg-white/10 hover:text-white text-sm font-medium transition-all duration-200">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+            </svg>
+            <span>Dashboard</span>
+        </a>
+
+        <a href="#" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-white/70 hover:bg-white/10 hover:text-white text-sm font-medium transition-all duration-200">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
+            </svg>
+            <span>Archive</span>
+        </a>
+
+        <a href="{% url 'receiving' %}" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-white bg-red-700 text-sm font-medium transition-all duration-200">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"/>
+            </svg>
+            <span>Receiving</span>
+        </a>
+
+        <a href="#" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-white/70 hover:bg-white/10 hover:text-white text-sm font-medium transition-all duration-200">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+            </svg>
+            <span>Inventory</span>
+        </a>
+
+    </nav>
+
+    <!-- Logout -->
+    <div class="px-3 py-4 border-t border-white/10">
+        <a href="{% url 'logout' %}"
+           class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-white/70 hover:bg-white/10 hover:text-white text-sm font-medium transition-all duration-200">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+            </svg>
+            <span>Logout</span>
+        </a>
+    </div>
+
+</div>

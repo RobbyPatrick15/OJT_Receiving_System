@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WMSU - Records and Archives System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'playfair': ['"Playfair Display"', 'serif'],
+                        'dm': ['"DM Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        wmsu: {
+                            red: '#E52226',
+                            dark: '#a92626',
+                            deeper: '#c0392b',
+                        }
+                    },
+                    keyframes: {
+                        rise: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    },
+                    animation: {
+                        rise: 'rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) both',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(139, 0, 0, 0.4);
+            backdrop-filter: brightness(1.1) saturate(1.3);
+            z-index: 0;
+        }
+        input:focus {
+            border-color: #c0392b !important;
+            box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.12);
+            background: white !important;
+        }
+    </style>
+</head>
+<body class="font-dm h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat overflow-hidden relative"
+      style="background-image: url('{% static 'accounts/background_wmsu.jpg' %}')">
+
+    <!-- Card -->
+    <div class="relative z-10 w-[90%] sm:w-[420px] md:w-[450px] rounded-xl overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.6)] animate-rise">
+
+        <!-- Red Header -->
+        <div class="bg-wmsu-red px-6 pt-12 pb-7 flex flex-col items-center gap-3">
+            <div class="w-24 h-24 rounded-full border-[3px] border-white/60 bg-white flex items-center justify-center overflow-hidden">
+                <img src="{% static 'accounts/logo_wmsu.JPG' %}" alt="WMSU Logo" class="w-full h-full object-contain">
+            </div>
+            <h1 class="font-playfair text-5xl text-white tracking-wide">WMSU</h1>
+            <p class="text-base text-white/85 tracking-wider font-light">Records and Archives System</p>
+        </div>
+
+        <!-- White Body -->
+        <div class="bg-white px-8 py-8">
+
+            {% if error %}
+                <div class="bg-red-50 text-wmsu-deeper text-sm px-3 py-2 rounded-md mb-4 border-l-4 border-wmsu-deeper">
+                    {{ error }}
+                </div>
+            {% endif %}
+
+            <form method="POST" class="space-y-4">
+                {% csrf_token %}
+
+                <!-- Email -->
+                <div class="flex flex-col gap-1.5">
+                    <label for="username" class="text-xs font-medium text-gray-500 tracking-wide">Email</label>
+                    <input type="text" id="username" name="username" required
+                           class="w-full px-4 py-4 border border-gray-200 rounded-md text-sm bg-gray-50 text-gray-800 outline-none transition-all duration-200">
+                </div>
+
+                <!-- Password -->
+                <div class="flex flex-col gap-1.5">
+                    <label for="password" class="text-xs font-medium text-gray-500 tracking-wide">Password</label>
+                    <input type="password" id="password" name="password" required
+                           class="w-full px-4 py-4 border border-gray-200 rounded-md text-sm bg-gray-50 text-gray-800 outline-none transition-all duration-200">
+                </div>
+
+                <!-- Button -->
+                <button type="submit"
+                        class="w-full py-4 mt-2 bg-wmsu-red hover:bg-wmsu-dark active:scale-[0.98] text-white font-semibold text-sm tracking-widest uppercase rounded-md transition-all duration-200 cursor-pointer border-none">
+                    Log In
+                </button>
+            </form>
+
+            <p class="text-center text-base text-gray-400 mt-5 leading-relaxed">
+                No account? Sign in with<br>your WMSU email.
+            </p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <p class="absolute bottom-7 left-0 right-0 text-center text-xs text-white/50 tracking-wide z-10">
+        ©2024 WMSU. All rights reserved
+    </p>
+
+</body>
+</html>
